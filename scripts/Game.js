@@ -77,6 +77,9 @@ class MainScene extends Phaser.Scene {
         });
     }
    function preload() {
+    // Your asset-loading logic here
+}
+
     // Load your audio assets
     this.load.audio('backgroundMusic', 'assets/background_music.mp3');
 }
@@ -231,16 +234,7 @@ window.onload = () => {
 // Game.js
 
 // Phaser Game Configuration
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    },
-    audio: {
+
         disableWebAudio: false // Ensure Phaser uses Web Audio API
     }
 };
@@ -249,7 +243,33 @@ const game = new Phaser.Game(config);
 
 // Preload assets
 function preload() {
+    this.load.image('backconst config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: {
+        preload: preload, // Define preload here
+        create: create,
+        update: update
+    }
+};
+const game = new Phaser.Game(config);
+
+function preload() {
     this.load.image('background', 'assets/background.png');
+    this.load.image('jackal', 'assets/jackal.png');
+    this.load.image('raven', 'assets/raven.png');
+    this.load.image('titan', 'assets/titan.png');
+}
+
+function create() {
+    this.add.image(400, 300, 'background');
+}
+
+function update() {
+    // Update logic here
+}
+ground', 'assets/background.png');
     this.load.image('jackal', 'assets/jackal.png');
     this.load.image('raven', 'assets/raven.png');
     this.load.image('titan', 'assets/titan.png');
