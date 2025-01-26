@@ -76,7 +76,20 @@ class MainScene extends Phaser.Scene {
             }
         });
     }
+   function preload() {
+    // Load your audio assets
+    this.load.audio('backgroundMusic', 'assets/background_music.mp3');
+}
 
+function create() {
+    const scene = this;
+
+    document.addEventListener('pointerdown', () => {
+        const music = scene.sound.add('backgroundMusic', { loop: true, volume: 0.5 });
+        music.play();
+    }, { once: true });
+}
+ 
     create() {
         // Setup main gameplay
         this.add.image(400, 300, 'background');
@@ -215,3 +228,17 @@ window.onload = () => {
     }
 };
 
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: {
+        preload: preload,
+        create: create
+    },
+    audio: {
+        disableWebAudio: false // Ensures Phaser's Web Audio is enabled
+    }
+};
+
+const game = new Phaser.Game(config);
