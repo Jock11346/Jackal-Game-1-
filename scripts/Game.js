@@ -188,18 +188,30 @@ function victory(scene) {
 }
 
 // Game Configuration
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false
+window.onload = () => {
+    const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
         }
-    },
-    scene: [TitleScene, MainScene, GameOverScene]
+    };
+
+    const game = new Phaser.Game(config);
+
+    function preload() {
+        // Load assets
+    }
+
+    function create() {
+        // Setup game objects
+    }
+
+    function update() {
+        // Game loop
+    }
 };
 
-// Initialise Game
-const game = new Phaser.Game(config);
