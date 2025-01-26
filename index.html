@@ -8,5 +8,19 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
     <script src="scripts/Game.js" defer></script> <!-- Ensure this points to your game script -->
+    <script>
+    let audioContext;
+
+    document.addEventListener('pointerdown', () => {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            console.log("AudioContext created or resumed!");
+        } else if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+                console.log("AudioContext resumed after user interaction!");
+            });
+        }
+    }, { once: true });
+</script>
 </body>
 </html>
