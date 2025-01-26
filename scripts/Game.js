@@ -228,17 +228,64 @@ window.onload = () => {
     }
 };
 
+// Game.js
+
+// Phaser Game Configuration
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     },
     audio: {
-        disableWebAudio: false // Ensures Phaser's Web Audio is enabled
+        disableWebAudio: false // Ensure Phaser uses Web Audio API
     }
 };
 
 const game = new Phaser.Game(config);
+
+// Preload assets
+function preload() {
+    this.load.image('background', 'assets/background.png');
+    this.load.image('jackal', 'assets/jackal.png');
+    this.load.image('raven', 'assets/raven.png');
+    this.load.image('titan', 'assets/titan.png');
+    this.load.audio('backgroundMusic', 'assets/background_music.mp3'); // Background music
+}
+
+// Create the game scene
+function create() {
+    const scene = this;
+
+    // Add background
+    this.add.image(400, 300, 'background');
+
+    // Add characters
+    const jackal = this.add.sprite(200, 300, 'jackal').setScale(1.5);
+    const raven = this.add.sprite(400, 300, 'raven').setScale(1.5);
+    const titan = this.add.sprite(600, 300, 'titan').setScale(1.5);
+
+    // Set up audio but wait for user interaction to play
+    const music = this.sound.add('backgroundMusic', { loop: true, volume: 0.5 });
+
+    document.addEventListener('pointerdown', () => {
+        if (this.sound.context.state === 'suspended') {
+            this.sound.context.resume().then(() => {
+                console.log('AudioContext resumed.');
+                music.play(); // Start music after interaction
+            });
+        } else {
+            music.play();
+        }
+    }, { once: true });
+
+    console.log("Game scene created.");
+}
+
+// Game update loop (if needed)
+function update() {
+    // Add your game update logic here
+}
