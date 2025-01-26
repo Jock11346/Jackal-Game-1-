@@ -242,8 +242,7 @@ window.onload = () => {
 const game = new Phaser.Game(config);
 
 // Preload assets
-function preload() {
-    this.load.image('backconst config = {
+const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
@@ -253,6 +252,7 @@ function preload() {
         update: update
     }
 };
+
 const game = new Phaser.Game(config);
 
 function preload() {
@@ -269,6 +269,7 @@ function create() {
 function update() {
     // Update logic here
 }
+
 ground', 'assets/background.png');
     this.load.image('jackal', 'assets/jackal.png');
     this.load.image('raven', 'assets/raven.png');
