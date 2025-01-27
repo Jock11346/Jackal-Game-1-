@@ -144,7 +144,6 @@ function transitionToVictory(scene) {
 
 // Integrate Titan into storyline and gameplay
 addEventListener('load', () => {
-    preloadAssets();
     createScenes();
     const scene = initializeScene();
     checkLevelProgress(scene);
