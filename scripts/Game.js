@@ -15,6 +15,7 @@ const ASSETS = {
     bossMusic: "assets/boss_music.mp3", // Added Titan's boss music
     victoryMusic: "assets/victory_music.mp3", // Victory music added
     normalMusic: "assets/normal_music.mp3"
+    victoryScreen:  "assets/victory.png"
 };
 
 // Titan character configuration
