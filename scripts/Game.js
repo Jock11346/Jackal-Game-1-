@@ -149,3 +149,36 @@ addEventListener('load', () => {
     const scene = initializeScene();
     checkLevelProgress(scene);
 });
+class MyGameScene extends Phaser.Scene {
+       constructor() {
+           super('MyGameScene');
+       }
+
+       preload() {
+           this.load.image('victoryScreen', 'assets/victory.png');
+           this.load.audio('victoryMusic', 'assets/victory_music.mp3');
+           // ... load other assets
+       }
+
+       create() {
+           // ... your create logic, like adding images, setting up physics, etc.
+
+           // Example of how to call transitionToVictory from a button or event:
+           this.input.once('pointerdown', () => {
+               this.transitionToVictory();
+           });
+       }
+
+       transitionToVictory() {
+           // ... your transitionToVictory function
+           this.add.image(400, 300, 'victoryScreen');
+           // ...
+       }
+   }
+
+   const config = {
+       // Your Phaser game config
+       scene: [MyGameScene]
+   };
+
+   const game = new Phaser.Game(config);
