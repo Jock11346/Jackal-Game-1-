@@ -1,34 +1,27 @@
-/* General body styling */
+/* styles.css */
+
 body {
   margin: 0;
-  padding: 0;
-  background-color: #000; /* Black background for a dramatic look */
-  color: #fff; /* White text for better contrast */
+  background-color: #000; /* Dark background for a dramatic effect */
   font-family: 'Arial', sans-serif;
+  color: white;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   overflow: hidden;
 }
 
-/* Game container styling */
 #game-container {
-  position: relative;
-  width: 800px;
-  height: 600px;
-  border: 3px solid #fff; /* White border around the game canvas */
-  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.8); /* Subtle glow effect */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Optional: loading text or placeholder styling */
-.loading-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  color: #fff;
-  text-shadow: 0px 0px 10px #ff0000; /* Red glow effect */
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
-css/styles.css
