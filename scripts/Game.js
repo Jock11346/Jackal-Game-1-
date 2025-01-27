@@ -175,3 +175,52 @@ class MyGameScene extends Phaser.Scene {
    };
 
    const game = new Phaser.Game(config);
+let audioContext = null;
+
+function createAudioContext(t) {
+    if (audioContext) {
+        return audioContext;
+    }
+
+    const e = t.config.audio;
+    const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+
+    if (AudioContextConstructor) {
+      audioContext = new AudioContextConstructor();
+    }
+
+    return audioContext; // Might be null if AudioContext isn't supported
+}
+
+//  Example of how to use it with a user gesture:
+
+// 1.  A button:
+const startButton = document.getElementById('startButton'); // Replace with your button's ID
+startButton.addEventListener('click', () => {
+    const audioContext = createAudioContext(gameConfig); // Assuming 'gameConfig' is available
+
+    if (audioContext) {
+        // Now it's safe to use the audio context
+        // ...your Phaser initialization code...
+        // Example:
+        const source = audioContext.createBufferSource();
+        // ...configure and play the source...
+
+    } else {
+        console.error("AudioContext not supported.");
+    }
+});
+
+// 2. Or any other event listener (e.g., keydown):
+document.addEventListener('keydown', () => {
+  const audioContext = createAudioContext(gameConfig);
+  if(audioContext) {
+    // ... your code
+  } else {
+    // ... error handling
+  }
+});
+
+// ...your Phaser initialization code...
+// Remove the automatic call to createAudioContext.
+// Initialize Phaser only after user gesture
