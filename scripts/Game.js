@@ -142,12 +142,6 @@ function transitionToVictory(scene) {
     });
 }
 
-// Integrate Titan into storyline and gameplay
-addEventListener('load', () => {
-    createScenes();
-    const scene = initializeScene();
-    checkLevelProgress(scene);
-});
 class MyGameScene extends Phaser.Scene {
        constructor() {
            super('MyGameScene');
