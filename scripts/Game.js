@@ -66,6 +66,7 @@ function spawnTitan(scene) {
         const attack = scene.physics.add.sprite(titan.x, titan.y, 'plasmaShockwave');
         attack.setCircle(TITAN.weapon.attackRadius);
         scene.physics.add.overlap(player, attack, () => {
+            if (!attack.active) return; // Prevent unintended overlaps
             player.health -= TITAN.weapon.damage;
             updateHUD();
             if (player.health <= 0) {
@@ -80,7 +81,7 @@ function spawnTitan(scene) {
     titan.on('destroy', () => {
         currentBossDefeated = true;
         scene.sound.play('victoryMusic', { volume: 0.7 });
-        victory(scene);
+        transitionToVictory(scene);
     });
 
     return titan;
@@ -88,15 +89,13 @@ function spawnTitan(scene) {
 
 // Updated game flow to include Titan
 function updateGameFlow(scene) {
-    if (!currentBossDefeated) {
-        // Trigger boss battle
-        scene.state = STATES.BOSS_BATTLE;
-        scene.sound.stopAll();
-        scene.sound.play('bossMusic');
+    if (scene.state === STATES.BOSS_BATTLE && !currentBossDefeated) {
+        // Ensure boss battle continues until Titan is defeated
         spawnTitan(scene);
-    } else {
+    } else if (currentBossDefeated) {
+        // Transition to victory after Titan is defeated
         scene.state = STATES.VICTORY;
-        victory(scene);
+        transitionToVictory(scene);
     }
 }
 
@@ -117,6 +116,7 @@ function startBossBattle(scene) {
             index++;
             setTimeout(showNextLine, 3000);
         } else {
+            scene.state = STATES.BOSS_BATTLE;
             updateGameFlow(scene);
         }
     };
@@ -131,7 +131,7 @@ function checkLevelProgress(scene) {
 }
 
 // Victory screen update
-function victory(scene) {
+function transitionToVictory(scene) {
     scene.add.image(400, 300, 'victoryScreen');
     scene.sound.stopAll();
     scene.sound.play('victoryMusic');
