@@ -12,7 +12,6 @@ const ASSETS = {
     bossMusic: "assets/boss_music.mp3",
     victoryMusic: "assets/victory_music.mp3",
     normalMusic: "assets/normal_music.mp3"
-    victoryScreen:  "assets/victory.png"
 };
 preload() {
     console.log("Preloading assets...");
