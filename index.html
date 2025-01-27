@@ -4,40 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jackal Game</title>
-</head>
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
-    <script src="scripts/Game.js" defer></script> <!-- Ensure this points to your game script -->
-    <script>
-
-    let audioContext;
-
-    document.addEventListener('pointerdown', () => {
-        if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            console.log("AudioContext created or resumed!");
-        } else if (audioContext.state === 'suspended') {
-            audioContext.resume().then(() => {
-                console.log("AudioContext resumed after user interaction!");
-            });
-        }
-    }, { once: true });
-</script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jackal The Game</title>
+    
+    <!-- Link to the styles.css file -->
     <link rel="stylesheet" href="css/styles.css">
-
+    
+    <!-- Favicon (optional) -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <h1>Jackal The Game</h1>
-    <canvas id="gameCanvas"></canvas>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Link to the Phaser library -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    
+    <!-- Link to the Game.js file -->
     <script src="scripts/Game.js" defer></script>
 </body>
 </html>
