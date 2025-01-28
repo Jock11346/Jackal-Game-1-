@@ -10,6 +10,14 @@ class MainScene extends Phaser.Scene {
         this.load.image('raven', 'assets/raven.png');
         this.load.image('titan', 'assets/titan.png');
         this.load.audio('bgMusic', 'assets/background-music.mp3');
+
+        // Error handling for asset loading
+        this.load.on('filecomplete', (key, type) => {
+            console.log(`Loaded ${type}: ${key}`);
+        });
+        this.load.on('loaderror', (file) => {
+            console.error(`Failed to load ${file.key}`);
+        });
     }
 
     create() {
@@ -37,25 +45,6 @@ class MainScene extends Phaser.Scene {
         startButton.on('pointerdown', () => {
             this.scene.start('GameScene');
         });
-
-        // Fix for canvas-related warnings
-        this.setupCanvasOptimisation();
-    }
-
-    setupCanvasOptimisation() {
-        // Fix for `getImageData` and `willReadFrequently`
-        let canvas = document.createElement('canvas');
-        canvas.width = 2;
-        canvas.height = 1;
-        canvas.willReadFrequently = true;
-        let context = canvas.getContext('2d', { willReadFrequently: true });
-        context.fillStyle = 'rgba(10, 20, 30, 0.5)';
-        context.fillRect(0, 0, 1, 1);
-        let imageData = context.getImageData(0, 0, 1, 1);
-
-        if (!imageData) {
-            console.error('Canvas optimization failed.');
-        }
     }
 }
 
