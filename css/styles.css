@@ -1,21 +1,18 @@
-/* styles.css: Basic styling for the game */
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    font-family: Arial, sans-serif;
 }
 
-h1 {
-  margin-top: 20px;
-  font-size: 2.5em;
-  color: #ff4500;
-}
-
-canvas {
-  display: block;
-  margin: 20px auto;
-  border: 2px solid #ff4500;
+#game-container {
+    width: 800px;
+    height: 600px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(45deg, #1a1a1a, #333);
 }
