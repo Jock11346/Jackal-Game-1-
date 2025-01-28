@@ -1,70 +1,82 @@
-// Game.js: Phaser game logic
-
-// Title Scene
-class TitleScene extends Phaser.Scene {
-  constructor() {
-    super('TitleScene');
-  }
-
-  preload() {
-    this.load.image('title_screen', 'assets/title_screen.png'); // Adjusted path
-  }
-
-  create() {
-    this.add.image(400, 300, 'title_screen');
-    this.input.once('pointerdown', () => {
-      this.scene.start('MainScene');
-    });
-  }
-}
-
-// Main Scene
 class MainScene extends Phaser.Scene {
-  constructor() {
-    super('MainScene');
-  }
+    constructor() {
+        super({ key: 'MainScene' });
+    }
 
-  preload() {
-    // Preload assets
-    this.load.image('background', 'assets/background.png');
-    this.load.image('jackal', 'assets/jackal.png');
-    this.load.image('raven', 'assets/raven.png');
-    this.load.image('titan', 'assets/titan.png');
-    this.load.audio('background_music', 'assets/music.mp3');
-  }
+    preload() {
+        // Preload assets
+        this.load.image('background', 'assets/background.png');
+        this.load.image('jackal', 'assets/jackal.png');
+        this.load.image('raven', 'assets/raven.png');
+        this.load.image('titan', 'assets/titan.png');
+        this.load.audio('bgMusic', 'assets/background-music.mp3');
+    }
 
-  create() {
-    this.add.image(400, 300, 'background');
+    create() {
+        // Add background
+        this.add.image(400, 300, 'background');
 
-    // Adding characters
-    const jackal = this.physics.add.sprite(200, 300, 'jackal');
-    const raven = this.physics.add.sprite(400, 300, 'raven');
-    const titan = this.physics.add.sprite(600, 300, 'titan');
+        // Add characters
+        this.add.image(200, 300, 'jackal').setScale(0.5);
+        this.add.image(400, 300, 'raven').setScale(0.5);
+        this.add.image(600, 300, 'titan').setScale(0.5);
 
-    // Background music
-    const music = this.sound.add('background_music', { loop: true });
-    music.play();
+        // Play background music
+        this.sound.pauseOnBlur = false; // Ensures music doesn't pause when tab is inactive
+        const bgMusic = this.sound.add('bgMusic');
+        bgMusic.play({ loop: true });
 
-    // Display instructions
-    this.add.text(50, 50, 'Click anywhere to start the action!', { fontSize: '20px', color: '#fff' });
+        // Add start button
+        const startButton = this.add.text(400, 500, 'Start Game', {
+            font: '24px Arial',
+            fill: '#fff',
+        })
+            .setOrigin(0.5)
+            .setInteractive();
 
-    // Start interaction on pointer click
-    this.input.on('pointerdown', () => {
-      this.add.text(200, 400, 'Action has begun!', { fontSize: '24px', color: '#ff0' });
-    });
-  }
+        startButton.on('pointerdown', () => {
+            this.scene.start('GameScene');
+        });
+
+        // Fix for canvas-related warnings
+        this.setupCanvasOptimisation();
+    }
+
+    setupCanvasOptimisation() {
+        // Fix for `getImageData` and `willReadFrequently`
+        let canvas = document.createElement('canvas');
+        canvas.width = 2;
+        canvas.height = 1;
+        canvas.willReadFrequently = true;
+        let context = canvas.getContext('2d', { willReadFrequently: true });
+        context.fillStyle = 'rgba(10, 20, 30, 0.5)';
+        context.fillRect(0, 0, 1, 1);
+        let imageData = context.getImageData(0, 0, 1, 1);
+
+        if (!imageData) {
+            console.error('Canvas optimization failed.');
+        }
+    }
 }
 
-// Game Configuration
+class GameScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'GameScene' });
+    }
+
+    create() {
+        this.add.text(400, 300, 'Game is Running!', {
+            font: '32px Arial',
+            fill: '#fff',
+        }).setOrigin(0.5);
+    }
+}
+
 const config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: 'arcade',
-    arcade: { debug: false },
-  },
-  scene: [TitleScene, MainScene],
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: [MainScene, GameScene],
 };
 
 const game = new Phaser.Game(config);
