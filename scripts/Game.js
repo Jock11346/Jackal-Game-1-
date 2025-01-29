@@ -16,6 +16,7 @@ function preload() {
     // Load assets
     this.load.image('background', 'assets/background.png');
     this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('enemy', 'assets/enemies/enemy.png');
     // Load other assets as needed
 }
 
