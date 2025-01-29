@@ -1,71 +1,70 @@
-class MainScene extends Phaser.Scene {
-    constructor() {
-        super({ key: 'MainScene' });
-    }
-
-    preload() {
-        // Preload assets
-        this.load.image('background', 'assets/background.png');
-        this.load.image('jackal', 'assets/jackal.png');
-        this.load.image('raven', 'assets/raven.png');
-        this.load.image('titan', 'assets/titan.png');
-        this.load.audio('bgMusic', 'assets/background-music.mp3');
-
-        // Error handling for asset loading
-        this.load.on('filecomplete', (key, type) => {
-            console.log(`Loaded ${type}: ${key}`);
-        });
-        this.load.on('loaderror', (file) => {
-            console.error(`Failed to load ${file.key}`);
-        });
-    }
-
-    create() {
-        // Add background
-        this.add.image(400, 300, 'background');
-
-        // Add characters
-        this.add.image(200, 300, 'jackal').setScale(0.5);
-        this.add.image(400, 300, 'raven').setScale(0.5);
-        this.add.image(600, 300, 'titan').setScale(0.5);
-
-        // Play background music
-        this.sound.pauseOnBlur = false; // Ensures music doesn't pause when tab is inactive
-        const bgMusic = this.sound.add('bgMusic');
-        bgMusic.play({ loop: true });
-
-        // Add start button
-        const startButton = this.add.text(400, 500, 'Start Game', {
-            font: '24px Arial',
-            fill: '#fff',
-        })
-            .setOrigin(0.5)
-            .setInteractive();
-
-        startButton.on('pointerdown', () => {
-            this.scene.start('GameScene');
-        });
-    }
-}
-
-class GameScene extends Phaser.Scene {
-    constructor() {
-        super({ key: 'GameScene' });
-    }
-
-    create() {
-        this.add.text(400, 300, 'Game is Running!', {
-            font: '32px Arial',
-            fill: '#fff',
-        }).setOrigin(0.5);
-    }
-}
-
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: [MainScene, GameScene],
+    parent: 'game-container',
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
 };
 
 const game = new Phaser.Game(config);
+
+function preload() {
+    // Load assets
+    this.load.image('background', 'assets/background.png');
+    this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
+    // Load other assets as needed
+}
+
+function create() {
+    // Add background
+    this.add.image(400, 300, 'background');
+
+    // Add player sprite
+    this.player = this.physics.add.sprite(100, 450, 'player');
+
+    // Player animations
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'turn',
+        frames: [{ key: 'player', frame: 4 }],
+        frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('player', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    // Input events
+    this.cursors = this.input.keyboard.createCursorKeys();
+}
+
+function update() {
+    if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-160);
+        this.player.anims.play('left', true);
+    } else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(160);
+        this.player.anims.play('right', true);
+    } else {
+        this.player.setVelocityX(0);
+        this.player.anims.play('turn');
+    }
+
+    if (this.cursors.up.isDown && this.player.body.touching.down) {
+        this.player.setVelocityY(-330);
+    }
+}
+
