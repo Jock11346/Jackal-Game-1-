@@ -1,5 +1,5 @@
 var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d', { willReadFrequently: true });
+var context = canvas.getContext('2d', { willReadFrequently: true });
 
 const config = {
     type: Phaser.AUTO,
@@ -10,7 +10,6 @@ const config = {
         preload: preload,
         create: create,
         update: update
-        
     }
 };
 
@@ -23,43 +22,9 @@ function preload() {
     this.load.image('enemy', 'assets/enemies/enemy.png');
     this.load.audio('bgMusic', 'assets/bgMusic.mp3');
     this.sound.add('bgMusic').play({ loop: true });
-  // Load other assets as needed
-}
-function checkBlendModeSupport(r, i, o, a, n, s) {
-  const canvas = o.create(i, 6, 1);
-  const context = canvas.getContext("2d", { willReadFrequently: true });
-
-  function checkMultiplyBlend(r, i) {
-    context.globalCompositeOperation = "multiply";
-    context.drawImage(r, 0, 0);
-    context.drawImage(i, 2, 0);
-
-    // Only call getImageData once
-    const imageData = context.getImageData(2, 0, 1, 1);
-    if (!imageData) return false;
-
-    const data = imageData.data;
-    return 255 === data[0] && 0 === data[1] && 0 === data[2];
-  }
-
-  // Load the first image
-  r.onload = () => {
-    // Load the second image
-    i.onload = () => {
-      a.supportNewBlendModes = checkMultiplyBlend(r, i);
-      o.remove(i); // Clean up the temporary canvas
-    };
-    i.src = n + "/wCKxvRF" + s;
-  };
-
-  r.src = n + "AP804Oa6" + s;
+    // Load other assets as needed
 }
 
-// Example usage (assuming you have r, i, o, a, n, s defined):
-let r = new Image();
-let i = new Image();
-
-checkBlendModeSupport(r, i, o, a, n, s);
 function create() {
     // Add background
     this.add.image(400, 300, 'background');
@@ -108,4 +73,3 @@ function update() {
         this.player.setVelocityY(-330);
     }
 }
-
