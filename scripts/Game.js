@@ -1,3 +1,6 @@
+var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d', { willReadFrequently: true });
+
 const config = {
     type: Phaser.AUTO,
     width: 800,
@@ -7,8 +10,7 @@ const config = {
         preload: preload,
         create: create,
         update: update
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d', { willReadFrequently: true });
+        
 
     }
 };
