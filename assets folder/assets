@@ -1,14 +1,15 @@
 assets/
 ├── images/
-│   ├── titan.png
-│   ├── raven.png
-│   ├── jackal.png
-│   ├── background.jpg
-│   └── start-button.png
+titan.png
+raven.png
+jackal.png
+background.jpg
+player.png
+└── start-button.png
 ├── audio/
-│   ├── bgMusic.mp3
-│   ├── buttonClick.wav
-│   └── explosion.mp3
+bgMusic.mp3
+ buttonClick.wav
+explosion.mp3
 ├── fonts/
-│   ├── customFont.ttf
-│   └── anotherFont.otf
+ customFont.ttf
+ anotherFont.otf
