@@ -73,3 +73,16 @@ function update() {
         this.player.setVelocityY(-330);
     }
 }
+a.supportInverseAlpha = function() {
+    var canvas = o.create(this, 2, 1);
+    //set willReadFrequently to true
+    var t = canvas.getContext("2d", { willReadFrequently: true });
+    t.fillStyle = "rgba(10, 20, 30, 0.5)",
+    t.fillRect(0, 0, 1, 1);
+    var e = t.getImageData(0, 0, 1, 1);
+    if (null === e)
+        return !1;
+    t.putImageData(e, 1, 0);
+    var i = t.getImageData(1, 0, 1, 1);
+    return i.data[0] === e.data[0] && i.data[1] === e.data[1] && i.data[2] === e.data[2] && i.data[3] === e.data[3]
+}())
