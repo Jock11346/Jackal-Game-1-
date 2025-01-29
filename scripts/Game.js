@@ -17,7 +17,9 @@ function preload() {
     this.load.image('background', 'assets/background.png');
     this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
     this.load.image('enemy', 'assets/enemies/enemy.png');
-    // Load other assets as needed
+    this.load.audio('bgMusic', 'assets/bgMusic.mp3');
+    this.sound.add('bgMusic').play({ loop: true });
+  // Load other assets as needed
 }
 
 function create() {
